@@ -18,15 +18,19 @@ RUN cd /tmp && \
     sed -i 's/^more /: /g' install.sh && \
     (echo; echo; echo yes; echo ; echo y; echo; echo /data; echo y; echo; echo; echo y; echo) | ./install.sh && \
     rm -r /usr/local/crashplan/jre && \
-    ln -s /usr/lib/jvm/java-8-openjdk-armhf /usr/local/crashplan/jre && \
-    rm /usr/local/crashplan/libjtux.so
+    ln -s /usr/lib/jvm/java-8-openjdk-armhf /usr/local/crashplan/jre
 
-# Add ARM-compatible libjtux.
+# Add ARM-compatible libraries.
 ADD libjtux.so /usr/local/crashplan/libjtux.so
+ADD libmd5.so /usr/local/crashplan/libmd5.so
 
 # Link conf folder.
 RUN rm -rf /usr/local/crashplan/conf && \
     ln -s /config /usr/local/crashplan/conf
+
+# Run CrashPlan once.
+RUN /usr/local/crashplan/bin/CrashPlanEngine start && sleep 20 \
+    && /usr/local/crashplan/bin/CrashPlanEngine stop; sleep 20
 
 # Clean up.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
