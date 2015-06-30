@@ -1,32 +1,14 @@
-# docker-crashplan
+# CrashPlan for Raspberry Pi 2
 
-## Description
+This is a Dockerfile to set up [CrashPlan](http://www.code42.com/crashplan/).
 
-A Dockerfile for [CrashPlan](http://www.code42.com/crashplan/).
+# Usage
 
-## Volumes
-
-### `/data`
-
-`/data` contains CrashPlan configuration data.
-
-### `/backups`
-
-`/backups` contains local backups.
-
-## Ports
-
-### 4242
-
-Backup service.
-
-### 4243
-
-UI service.
-
-## Environment Variables
-
-### `MAX_MEMORY_MB`
-
-The maximum memory limit in megabytes. Defaults to `1024`. Code42 [recommends](http://support.code42.com/CrashPlan/Latest/Troubleshooting/CrashPlan_Runs_Out_Of_Memory_And_Crashes) allocating 1 GB per 1 TB of storage.
-
+```shell
+$ docker run \
+  -p 4242:4242
+  -p 4243:4243
+  -v /mnt/data:/data
+  -v ./config:/config
+  nunofgs/rpi-crashplan
+```
