@@ -25,6 +25,7 @@ ADD libjtux.so /usr/local/crashplan/libjtux.so
 ADD libmd5.so /usr/local/crashplan/libmd5.so
 
 # Link conf folder.
+ADD ./config /config
 RUN rm -rf /usr/local/crashplan/conf && \
     ln -s /config /usr/local/crashplan/conf
 
